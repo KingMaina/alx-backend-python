@@ -2,13 +2,13 @@
 
 """Contains a type annoted function,that safely retrieces a value
 """
-from typing import Any, Optional, Mapping, TypeVar
+from typing import Any, Optional, Mapping, TypeVar, Union
 
 T = TypeVar('T')
 
 
 def safely_get_value(dct: Mapping, key: Any,
-                     default: Optional[T]) -> Optional[T]:
+                     default: Union[T, None]) -> Union[Any, T]:
     """Retrieves a value from a dictionary
 
         Parameters
