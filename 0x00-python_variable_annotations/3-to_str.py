@@ -5,6 +5,7 @@
     a float argument
 """
 
+
 def to_str(n: float) -> str:
     """Returns the string representation of n
 
@@ -16,4 +17,4 @@ def to_str(n: float) -> str:
         -------
         (str): The string representation of n
     """
-    return str(n);
+    return str(n)
