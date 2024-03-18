@@ -29,7 +29,7 @@ async def task_wait_n(n: int, max_delay: int) -> List[float]:
     delay_list: List[float] = []
     for _ in range(0, n, 1):
         # Create task
-        task = task_wait_random(max_delay)
+        task: asyncio.Task = task_wait_random(max_delay)
         # Each task updates the delay list with their delay time
         task.add_done_callback(lambda delay: delay_list.append(delay.result()))
         tasks.append(task)
