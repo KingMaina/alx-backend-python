@@ -79,23 +79,30 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Set up tests before each test"""
+        """Set up tests"""
         config = {'return_value.json.side_effect':
-                  [cls.org_payload, cls.repos_payload]
+                  [cls.org_payload, cls.repos_payload,
+                  cls.org_payload, cls.repos_payload]
                   }
         cls.get_patcher = patch('requests.get', **config)
         cls.mock = cls.get_patcher.start()
 
     @classmethod
     def tearDownClass(cls):
-        """Tear down tests before each test"""
+        """Tear down tests"""
         cls.get_patcher.stop()
 
     def test_public_repos(self):
-        """Integration tests for fetchign public repos"""
+        """Integration tests for fetching public repos"""
         google_repo = GithubOrgClient(org_name='google')
         self.assertEqual(google_repo.org, self.org_payload)
         self.assertEqual(google_repo.repos_payload, self.repos_payload)
         self.assertEqual(google_repo.public_repos(), self.expected_repos)
         self.assertEqual(google_repo.public_repos(license='apache-2.0'),
                          self.apache2_repos)
+
+    def test_public_repos_with_license(self):
+        """Tests public repos with apache-2.0 license"""
+        repo = GithubOrgClient(org_name='google')
+        apache2_repos = repo.public_repos(license='apache-2.0')
+        self.assertEqual(apache2_repos, self.apache2_repos)
