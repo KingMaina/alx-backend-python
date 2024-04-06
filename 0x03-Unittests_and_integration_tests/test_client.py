@@ -82,7 +82,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """Set up tests"""
         config = {'return_value.json.side_effect':
                   [cls.org_payload, cls.repos_payload,
-                  cls.org_payload, cls.repos_payload]
+                   cls.org_payload, cls.repos_payload]
                   }
         cls.get_patcher = patch('requests.get', **config)
         cls.mock = cls.get_patcher.start()
