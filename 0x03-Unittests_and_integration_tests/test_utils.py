@@ -24,8 +24,8 @@ class TestAccessNestedMap(unittest.TestCase):
         self.assertEqual(result, expected)
 
     @parameterized.expand([
-        param("a", nested_map={}, path=("a",)),
-        param("b", nested_map={"a": 1}, path=("a", "b")),
+        param(nested_map={}, path=("a",), expected="a"),
+        param(nested_map={"a": 1}, path=("a", "b"), expected="b"),
     ])
     def test_access_nested_map_exception(self, expected: Any,
                                          nested_map: Mapping,
@@ -33,6 +33,7 @@ class TestAccessNestedMap(unittest.TestCase):
         """Tests if exception is raised for invalid keys"""
         with self.assertRaises(KeyError, msg=expected) as context_manager:
             access_nested_map(nested_map=nested_map, path=path)
+        self.assertEqual(expected, context_manager.msg)
 
 
 class TestGetJson(unittest.TestCase):
